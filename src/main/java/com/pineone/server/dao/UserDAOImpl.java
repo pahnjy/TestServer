@@ -4,8 +4,10 @@ import com.pineone.server.model.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class UserDAOImpl implements UserDAO {
         return session;
     }
 
+//    public Session getCurrentSession() {
+//        return sessionFactory.getCurrentSession();
+//    }
+
     @Override
     public void addUser(User user) {
         getCurrentSession().save(user);
@@ -36,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void updateUser(User user) {
-        User userToUpdate = getUser(user.getId());
+        User userToUpdate = new User();
         userToUpdate.setId(user.getId());
         userToUpdate.setUid(user.getUid());
         userToUpdate.setPassword(user.getPassword());
